@@ -9,4 +9,5 @@ MangaReadingLog is a web application where users can keep track of manga they ha
 - The user page shows how many manga entries the user has added and a list of those entries.
 - Users can assign one or more categories to a manga (like for example: romance, fantasy, comedy)
 - Users can add reviews and ratings to manga, which are shown on the manga page.
+
 In this application the main data object is a manga and the secondary data object is a review related to the manga.
