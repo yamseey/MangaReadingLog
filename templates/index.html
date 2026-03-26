@@ -10,7 +10,7 @@
   
   {% if session.username %}
   <p>
-    You are logged in as {{ session.username }}
+    Welcome back, {{ session.username }}!
   </p>
   {% endif %}
 
@@ -21,10 +21,10 @@
   </p>
 
   <p>
-    <a href="/new_item">Add a new manga</a>
+    <a href="/new_item">Add manga</a>
   </p>
 
-  <h2>Manga list</h2>
+  <h2>Browse manga</h2>
 
   <ul>
     {% for item in items%}

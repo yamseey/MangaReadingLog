@@ -33,6 +33,22 @@ def create_item():
     items.add_item(title, description, author, user_id)
     return redirect("/")
 
+@app.route("/edit_item/<int:item_id>")
+def edit_item(item_id):
+    item=items.get_item(item_id)
+    return render_template("edit_item.html", item=item)
+
+@app.route("/update_item", methods=["POST"])
+def update_item():
+    item_id=request.form["item_id"]
+    title = request.form["title"]
+    description = request.form["description"]
+    author = request.form["author"]
+
+
+    items.update_item(item_id, title, description, author)
+    return redirect("/item/" + str(item_id))
+
 @app.route("/register")
 def register():
     return render_template("register.html")
@@ -77,7 +93,7 @@ def login():
 
 @app.route("/logout")
 def logout():
-    del session[user_id]
+    del session["user_id"]
     del session["username"]
     return redirect("/")
 

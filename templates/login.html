@@ -6,9 +6,10 @@
 </head>
 
 <body>
+  <h1>Log in</h1>
   {% if session.username %}
   <p>
-    You are logged in as {{ session.username }}
+    Welcome back, {{ session.username }}!
   </p>
   <p>
     <a href="/logout">Logout</a>
@@ -16,11 +17,11 @@
   {% else %}
   <form action="/login" method="post">
     <p>
-      Tunnus: <br />
+      Username: <br />
       <input type="text" name="username" />
     </p>
     <p>
-      Salasana: <br />
+      Password: <br />
       <input type="password" name="password" />
     </p>
     <input type="submit" value="Log in" />
