@@ -12,16 +12,21 @@
   <p>
     Welcome back, {{ session.username }}!
   </p>
-  {% endif %}
-
   <p>
-    <a href="/login">Log in</a>
-    <a href="/register">Register</a>
     <a href="/logout">Logout</a>
   </p>
 
   <p>
     <a href="/new_item">Add manga</a>
+  </p>
+  {% else %}
+  <p>
+    <a href="/login">Log in</a>
+    <a href="/register">Register</a>
+  </p>
+  {% endif %}
+
+  <p>
     <a href="/find_item">Search for manga</a>
   </p>
 
