@@ -5,7 +5,7 @@ MangaReadingLog is a web application where users can keep track of manga they ha
 
 - Users can create an account and log in to the application.
 - Users can keep track of manga they have read and write reviews about them.
-- Users can add manga entries, edit them or delete them.
+- Users can add their own manga entries, edit them or delete them.
 - Users can view added manga reviews.
 - Users can search for manga by title.
 - The user page shows how many manga entries the user has added and a list of those entries.
