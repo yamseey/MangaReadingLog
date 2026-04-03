@@ -15,6 +15,27 @@ MangaReadingLog is a web application where users can keep track of manga they ha
 In this application the main data object is a manga and the secondary data object is a review related to the manga.
 
 ## How to run the application
+Clone the repository:
+
+```
+$ git clone https://github.com/yamseey/MangaReadingLog.git
+```
+Create a virtual environment:
+
+```
+$ cd MangaReadingLog
+$ python -m venv venv
+```
+
+Activate the environment:
+
+```
+$ source venv/Scripts/activate #Windows
+$ source venv/bin/activate #Linux
+$ venv/bin/activate #Mac
+
+```
+
 
 Install `flask`:
 
