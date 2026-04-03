@@ -33,7 +33,6 @@ Activate the environment:
 $ source venv/Scripts/activate #Windows
 $ source venv/bin/activate #Linux
 $ venv/bin/activate #Mac
-
 ```
 
 
