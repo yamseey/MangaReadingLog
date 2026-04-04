@@ -2,25 +2,25 @@
 <html>
 
 <head>
-  <title>{{item.title}}</title>
+  <title>{{ item.title }}</title>
 </head>
 
 <body>
-  <h1>{{item.title}}</h1>
+  <h1>{{ item.title }}</h1>
   {% if session.user_id == item.user_id %}
 <p>
-  <a href="/edit_item/{{item.id}}">Edit</a>
-  <a href="/remove_item/{{item.id}}">Delete</a>
+  <a href="/edit_item/{{ item.id }}">Edit</a>
+  <a href="/remove_item/{{ item.id }}">Delete</a>
 </p>
 {% endif%}
 <p>
-  Author: {{item.author}}
+  Author: {{ item.author }}
 </p>
 <p>
- Synopsis: {{item.description}}
+ Synopsis: {{ item.description }}
 </p>
 <p>
-  Added by: {{item.username}}
+  Added by: <a href="/user/{{ item.user_id }}">{{ item.username }}</a>
 </p>
 <p>
   <a href ="/">←Back to Library</a>
