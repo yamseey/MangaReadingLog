@@ -7,15 +7,16 @@
 
 <body>
   <h1> MangaReadingLog </h1>
-  
   {% if session.username %}
   <p>
     Welcome back, {{ session.username }}!
   </p>
+  {% if message %}
+  <p style="color:green;">{{ message }}</p>
+  {% endif %}
   <p>
     <a href="/logout">Logout</a>
   </p>
-
   <p>
     <a href="/new_item">Add manga</a>
   </p>

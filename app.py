@@ -15,8 +15,9 @@ def require_login():
 
 @app.route("/")
 def index():
-    all_items=items.get_items()
-    return render_template("index.html", items = all_items)
+    all_items = items.get_items()
+    message = session.pop("message", None)
+    return render_template("index.html", items=all_items, message=message)
 
 @app.route("/find_item")
 def find_item():
@@ -25,13 +26,13 @@ def find_item():
         results = items.find_items(query)
 
     else:
-        query=""
-        results=[]
-    return render_template("find_item.html", query=query, results = results)
+        query = ""
+        results = []
+    return render_template("find_item.html", query=query, results=results)
 
 @app.route("/item/<int:item_id>")
 def show_item(item_id):
-    item=items.get_item(item_id)
+    item = items.get_item(item_id)
     if not item:
         abort(404)
     return render_template("show_item.html", item=item)
@@ -62,7 +63,7 @@ def create_item():
 @app.route("/edit_item/<int:item_id>")
 def edit_item(item_id):
     require_login()
-    item=items.get_item(item_id)
+    item = items.get_item(item_id)
     if not item:
         abort(404)
     if item["user_id"] != session["user_id"]:
@@ -72,8 +73,8 @@ def edit_item(item_id):
 @app.route("/update_item", methods=["POST"])
 def update_item():
     require_login()
-    item_id=request.form["item_id"]
-    item=items.get_item(item_id)
+    item_id = request.form["item_id"]
+    item = items.get_item(item_id)
     if not item:
         abort(404)
     if item["user_id"] != session["user_id"]:
@@ -89,11 +90,10 @@ def update_item():
     if not author or len(author) > 100:
         abort(403)
 
-
     items.update_item(item_id, title, description, author)
     return redirect("/item/" + str(item_id))
 
-@app.route("/remove_item/<int:item_id>", methods = ["GET", "POST"])
+@app.route("/remove_item/<int:item_id>", methods=["GET", "POST"])
 def remove_item(item_id):
     require_login()
     item = items.get_item(item_id)
@@ -103,7 +103,6 @@ def remove_item(item_id):
         abort(403)
 
     if request.method == "GET":
-        item=items.get_item(item_id)
         return render_template("remove_item.html", item=item)
 
     if request.method == "POST":
@@ -123,16 +122,23 @@ def create():
     password1 = request.form["password1"]
     password2 = request.form["password2"]
     if password1 != password2:
-        return "The passwords do not match"
+        return render_template("register.html", error="The passwords do not match.")
     password_hash = generate_password_hash(password1)
 
     try:
         sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
         db.execute(sql, [username, password_hash])
     except sqlite3.IntegrityError:
-        return "Username is already taken."
+        return render_template("register.html", error="Username is already taken.")
 
-    return "Username created."
+    sql = "SELECT id FROM users WHERE username = ?"
+    result = db.query(sql, [username])[0]
+
+    session["user_id"] = result["id"]
+    session["username"] = username
+    session["message"] = "Account created successfully!"
+
+    return redirect("/")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -144,7 +150,11 @@ def login():
         password = request.form["password"]
 
     sql = "SELECT id, password_hash FROM users WHERE username = ?"
-    result = db.query(sql, [username])[0]
+    result = db.query(sql, [username])
+
+    if not result:
+        return render_template("login.html", error="Invalid username or password.")
+    result = result[0]
     user_id = result["id"]
     password_hash = result["password_hash"]
 
@@ -153,7 +163,7 @@ def login():
         session["username"] = username
         return redirect("/")
     else:
-        return "Invalid username or password."
+        return render_template("login.html", error="Invalid username or password.")
 
 @app.route("/logout")
 def logout():
