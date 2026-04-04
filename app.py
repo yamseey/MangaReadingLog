@@ -132,18 +132,14 @@ def create():
     password2 = request.form["password2"]
     if password1 != password2:
         return render_template("register.html", error="The passwords do not match.")
-    password_hash = generate_password_hash(password1)
 
     try:
-        sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
-        db.execute(sql, [username, password_hash])
+        users.create_user(username, password1)
     except sqlite3.IntegrityError:
         return render_template("register.html", error="Username is already taken.")
 
-    sql = "SELECT id FROM users WHERE username = ?"
-    result = db.query(sql, [username])[0]
-
-    session["user_id"] = result["id"]
+    user_id = users.check_login(username, password1)
+    session["user_id"] = user_id
     session["username"] = username
     session["message"] = "Account created successfully!"
 
@@ -158,16 +154,8 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
 
-    sql = "SELECT id, password_hash FROM users WHERE username = ?"
-    result = db.query(sql, [username])
-
-    if not result:
-        return render_template("login.html", error="Invalid username or password.")
-    result = result[0]
-    user_id = result["id"]
-    password_hash = result["password_hash"]
-
-    if check_password_hash(password_hash, password):
+        user_id = users.check_login(username, password)
+    if user_id:
         session["user_id"] = user_id
         session["username"] = username
         return redirect("/")
