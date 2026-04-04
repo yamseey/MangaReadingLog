@@ -6,16 +6,16 @@
 </head>
 
 <body>
-  <h1> Search for manga </h1>
+  <h1> Search Manga </h1>
     <form action="/find_item" method = "get">
         <p>
-            Search: <input type="text" name="query" value = "{{ query }}">
+            <input type="text" name="query" value = "{{ query }}" placeholder="Search by title or synopsis..." size = "30">
         </p>
         <input type="submit" value = "Search">
     </form>
 
 <p>
-    <a href="/">Go back</a>
+    <a href="/">←Back to Library</a>
 </p>
 
 {% if query %}
