@@ -19,6 +19,26 @@
 <p>
  Synopsis: {{ item.description }}
 </p>
+{% for class in classes %}
+  {% if class.title == "Rating" %}
+    <p>
+      Rating:
+      {% for i in range(class.value|int) %}⭐{% endfor %}
+      ({{ class.value }}/5)
+    </p>
+  {% else %}
+    <p>
+      {{ class.title }}:
+      {% if class.value == "on_hold" %}
+        On-Hold
+      {% elif class.value == "plan_to_read" %}
+        Plan to Read
+      {% else %}
+        {{ class.value.capitalize() }}
+  {% endif %}
+    </p>
+  {% endif %}
+{% endfor %}
 <p>
   Added by: <a href="/user/{{ item.user_id }}">{{ item.username }}</a>
 </p>
