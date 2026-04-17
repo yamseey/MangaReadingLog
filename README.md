@@ -46,6 +46,7 @@ Create the database tables and add initial data:
 
 ```
 $ sqlite3 database.db < schema.sql
+$ sqlite3 database.db < init.sql
 ```
 
 Run the application:
