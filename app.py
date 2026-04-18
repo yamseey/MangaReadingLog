@@ -178,6 +178,20 @@ def add_image():
     items.add_image(item_id, image)
     return redirect("/images/" + str(item_id))
 
+@app.route("/remove_image", methods=["POST"])
+def remove_image ():
+    require_login()
+    item_id = request.form["item_id"]
+    item = items.get_item(item_id)
+    if not item:
+        abort(404)
+    if item["user_id"] != session["user_id"]:
+        abort(403)
+
+    items.remove_image(item_id)
+
+    return redirect("/images/" + str(item_id))
+
 @app.route("/update_item", methods=["POST"])
 def update_item():
     require_login()

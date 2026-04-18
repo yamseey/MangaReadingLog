@@ -14,6 +14,8 @@
   <a href="/images/{{ item.id }}">Edit/Add manga cover</a>
 </p>
 {% endif %}
+
+{% if images %}
 <div style="display: flex; gap: 24px; align-items: flex-start; margin-bottom: 20px;">
 
   <div>
@@ -29,6 +31,9 @@
     {% endfor %}
   </div>
   <div style="max-width: 700px;">
+  {% else %}
+  <div style="max-width: 700px; margin-bottom: 20px;">
+  {% endif %}
   <p>
     Author: {{ item.author }}
   </p>
@@ -65,13 +70,13 @@
         {% for i in range(class.value|int) %}⭐{% endfor %}
         ({{ class.value }}/5)
       </p>
+    <p>
+      Added by: <a href="/user/{{ item.user_id }}">{{ item.username }}</a>
+    </p>
     {% endif %}
   {% endfor %}
 </div>
 </div>
-<p>
-  Added by: <a href="/user/{{ item.user_id }}">{{ item.username }}</a>
-</p>
 
 <h2 style="margin-bottom: 8px;">Reviews</h2>
 

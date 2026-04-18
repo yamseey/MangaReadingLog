@@ -8,15 +8,55 @@
 <body>
     <h1>Manga cover</h1>
 
-    <h2>Add or update cover</h2>
-      <form action="/add_image" method="post" enctype="multipart/form-data">
-    <p>
-      Cover image: <input type="file" name="image" accept=".png" />
-    </p>
-    <input type="hidden" name="item_id" value="{{ item.id }}" />
-    <input type="submit" value="Upload cover" />
-  </form>
+    <div style="display: flex; gap: 30px; align-items: flex-start;">
 
+        <div>
+        {% if images %}
+            {% for image in images %}
+             <img src="/image/{{ image[0] }}" style="
+            width: 220px;
+            height: auto;
+            border-radius: 12px;
+            border: 1px solid #e0d5c6;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);">
+        {% endfor %}
+        <form action="/remove_image" method="post">
+        <input type="hidden" name="item_id" value="{{ item.id }}">
+        <input type="submit" value="Remove cover">
+
+      </form>
+      {% else %}
+        <div style="
+            width: 220px;
+            height: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e0d5c6;
+            border-radius: 12px;
+            background-color: #fbf7f2;
+            color: #7a6f63;
+            font-size: 14px;
+            text-align: center;
+            padding: 10px;
+            ">
+                No cover uploaded
+        </div>
+    {% endif %}
+    </div>
+    <div style="max-width: 300px;">
+        <h2>Add or update cover</h2>
+
+        <form action="/add_image" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="item_id" value="{{ item.id }}">
+        <p>
+            Cover image: <input type="file" name="image" accept=".png">
+        </p>
+        <input type="submit" value="Upload cover">
+        </form>
+
+  </div>
+</div>
     <p>
         <a href="/item/{{ item.id }}">←Back to Library</a>
     </p>
