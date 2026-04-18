@@ -12,6 +12,13 @@ CREATE TABLE items (
     user_id INTEGER REFERENCES USERS
 );
 
+CREATE TABLE reviews (
+    id INTEGER PRIMARY KEY,
+    item_id INTEGER REFERENCES items,
+    user_id INTEGER REFERENCES users,
+    review TEXT
+);
+
 CREATE TABLE classes (
     id INTEGER PRIMARY KEY, 
     title TEXT,

@@ -45,13 +45,15 @@ def show_item(item_id):
     if not item:
         abort(404)
     classes = items.get_classes(item_id)
-    return render_template("show_item.html", item=item, classes=classes)
+    reviews = items.get_reviews(item_id)
+    return render_template("show_item.html", item=item, classes=classes, reviews=reviews)
 
 @app.route("/new_item")
 def new_item():
     require_login()
     classes = items.get_all_classes()
     return render_template("new_item.html", classes=classes)
+
 
 @app.route("/create_item", methods=["POST"])
 def create_item():
@@ -83,6 +85,23 @@ def create_item():
     items.add_item(title, description, author, user_id, classes)
 
     return redirect("/")
+
+@app.route("/create_review", methods=["POST"])
+def create_review():
+    require_login()
+
+    review = request.form["review"]
+    item_id = request.form["item_id"]
+    item = items.get_item(item_id)
+    if not item:
+        abort(403)
+    user_id = session["user_id"]
+
+    all_classes = items.get_all_classes()
+
+    items.add_review(item_id, user_id, review)
+
+    return redirect("/item/" + str(item_id))
 
 @app.route("/edit_item/<int:item_id>")
 def edit_item(item_id):

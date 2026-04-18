@@ -42,6 +42,38 @@
 <p>
   Added by: <a href="/user/{{ item.user_id }}">{{ item.username }}</a>
 </p>
+
+<h2 style="margin-bottom: 8px;">Reviews</h2>
+
+{% for review in reviews %}
+  <div style="
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 12px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;"">
+
+  <p style="margin: 0 0 6px 0;">
+      {{ review.review }}
+    </p>
+    <p style="margin: 0; font-size: 0.85em; color: #555;">
+    by: <a href="/user/{{ review.user_id }}">{{ review.username }}</a>
+    </p>
+  </div>
+{% endfor %}
+
+<h2 style="margin-bottom: 5px;">New review</h2>
+<form action="/create_review" method="post">
+  <textarea name="review" rows="4" cols="45" maxlength="1000" required
+    style="resize: vertical; padding: 8px;"></textarea>
+
+  <p style="margin-top: 0px;">
+  <input type="hidden" name="item_id" value="{{ item.id }}">
+  <input type="submit" value="Post review" />
+  </p>
+</form>
 <p>
   <a href ="/">←Back to Library</a>
 </p>

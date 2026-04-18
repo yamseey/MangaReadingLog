@@ -25,6 +25,17 @@ def add_item(title, description, author, user_id, classes):
 
     item_id = db.last_insert_id()
 
+def add_review(item_id, user_id, review):
+    sql = """INSERT INTO reviews (item_id, user_id, review) VALUES (?, ?, ?)"""
+    db.execute(sql, [item_id, user_id, review])
+
+def get_reviews(item_id):
+    sql = """SELECT reviews.review, users.id user_id, users.username
+             FROM reviews, users
+             WHERE reviews.item_id = ? AND reviews.user_id = users.id
+             ORDER BY reviews.id DESC"""
+    return db.query(sql, [item_id])
+
 def get_items():
     sql = "SELECT id, title FROM items ORDER BY id DESC"
     return db.query(sql)
