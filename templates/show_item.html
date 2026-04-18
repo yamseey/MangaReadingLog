@@ -12,33 +12,45 @@
   <a href="/edit_item/{{ item.id }}">Edit</a>
   <a href="/remove_item/{{ item.id }}">Delete</a>
 </p>
-{% endif%}
+{% endif %}
 <p>
   Author: {{ item.author }}
 </p>
-<p>
- Synopsis: {{ item.description }}
-</p>
-{% for class in classes %}
-  {% if class.title == "Rating" %}
-    <p>
-      Rating:
-      {% for i in range(class.value|int) %}⭐{% endfor %}
-      ({{ class.value }}/5)
-    </p>
-  {% else %}
-    <p>
-      {{ class.title }}:
-      {% if class.value == "on_hold" %}
-        On-Hold
-      {% elif class.value == "plan_to_read" %}
-        Plan to Read
-      {% else %}
-        {{ class.value.capitalize() }}
-  {% endif %}
-    </p>
-  {% endif %}
-{% endfor %}
+  <p style="margin-bottom: 6px;">Categories:</p>
+  <div style="display: flex; flex-wrap: wrap; gap: 8px; max-width: 700px; margin-bottom: 14px;">
+    {% for class in classes %}
+      {% if class.title == "Category" %}
+        <span style="
+          padding: 4px 10px;
+          border: 1px solid #e0d5c6;
+          border-radius: 999px;
+          background-color: #f8f1e8;
+          font-size: 13px;
+          color: #6b5b4d;">
+          {{ class.value }}
+        </span>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <p style="max-width: 700px; line-height: 1.5;">
+    Synopsis: <br>
+    {{ item.description }}
+  </p>
+  {% for class in classes %}
+    {% if class.title == "Status" %}
+      <p>Status: {{ class.value }}</p>
+    {% endif %}
+  {% endfor %}
+
+  {% for class in classes %}
+    {% if class.title == "Rating" %}
+      <p>
+        Rating:
+        {% for i in range(class.value|int) %}⭐{% endfor %}
+        ({{ class.value }}/5)
+      </p>
+    {% endif %}
+  {% endfor %}
 <p>
   Added by: <a href="/user/{{ item.user_id }}">{{ item.username }}</a>
 </p>
@@ -51,9 +63,9 @@
     max-width: 600px;
     margin-bottom: 12px;
     padding: 12px;
-    border: 1px solid #ddd;
+    border: 1px solid #e0d5c6;
     border-radius: 10px;
-    background-color: #f9f9f9;"">
+    background-color: #fbf7f2;">
 
   <p style="margin: 0 0 6px 0;">
       {{ review.review }}

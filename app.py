@@ -73,7 +73,17 @@ def create_item():
     all_classes = items.get_all_classes()
 
     classes = []
-    for entry in request.form.getlist("classes"):
+    for field_name in ["status", "rating"]:
+        entry = request.form.get(field_name)
+        if entry:
+            class_title, class_value = entry.split(":")
+            if class_title not in all_classes:
+                abort(403)
+            if class_value not in all_classes[class_title]:
+                abort(403)
+            classes.append((class_title, class_value))
+
+    for entry in request.form.getlist("categories"):
         if entry:
             class_title, class_value = entry.split(":")
             if class_title not in all_classes:
@@ -113,13 +123,16 @@ def edit_item(item_id):
         abort(403)
 
     all_classes = items.get_all_classes()
-    classes = {}
-    for my_class in all_classes:
-        classes[my_class] = ""
-    for entry in items.get_classes(item_id):
-        classes[entry["title"]] = entry["value"]
+    classes = {"Status": "", "Rating": ""}
+    categories = []
 
-    return render_template("edit_item.html", item=item, classes=classes, all_classes=all_classes)
+    for entry in items.get_classes(item_id):
+        if entry["title"] == "Category":
+            categories.append(entry["value"])
+        else:
+            classes[entry["title"]] = entry["value"]
+
+    return render_template("edit_item.html", item=item, classes=classes, all_classes=all_classes, categories=categories)
 
 @app.route("/update_item", methods=["POST"])
 def update_item():
@@ -144,7 +157,17 @@ def update_item():
     all_classes = items.get_all_classes()
 
     classes = []
-    for entry in request.form.getlist("classes"):
+    for field_name in ["status", "rating"]:
+        entry = request.form.get(field_name)
+        if entry:
+            class_title, class_value = entry.split(":")
+            if class_title not in all_classes:
+                abort(403)
+            if class_value not in all_classes[class_title]:
+                abort(403)
+            classes.append((class_title, class_value))
+
+    for entry in request.form.getlist("categories"):
         if entry:
             class_title, class_value = entry.split(":")
             if class_title not in all_classes:

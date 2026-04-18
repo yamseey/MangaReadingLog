@@ -16,27 +16,67 @@
       Author: <br />
       <input type="text" name="author" size = "20" maxlength="100" required/>
     </p>
+<p>Categories:</p>
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px; max-width: 700px;">
+  {% for option in classes["Category"] %}
+    <label class="tag">
+      <input type="checkbox" name="categories" value="Category:{{ option }}">
+      <span>{{ option }}</span>
+    </label>
+  {% endfor %}
+</div>
+<style>
+.tag input {
+  display: none;
+}
+.tag span {
+  padding: 4px 10px;
+  border: 1px solid #bbb;
+  border-radius: 999px;
+  background-color: #f4f4f4;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.2s;
+}
+.tag span {
+  background-color: #f8f1e8;
+  border: 1px solid #e0d5c6;
+  color: #6b5b4d;
+}
+.tag input:checked + span {
+  background-color: #ecdcc8;
+  border-color: #cbbba6;
+  color: #4a3f35;
+}
+.tag span:hover {
+  background-color: #eee4d7;
+}
+</style>
     <p>
       Synopsis: <br />
       <textarea name="description" rows="8" cols="60" maxlength="1000" required ></textarea>
     </p>
-    {% for class in classes %}
-    <p>
-      {{ class }}: <br />
-      <select name="classes">
-        <option value="">Select {{ class.lower() }}</option>
-      {% for option in classes[class] %}
-        {% if class == "Rating" %}
-          <option value="{{ class }}:{{ option }}">
-            {% for i in range(option|int) %}⭐{% endfor %} ({{ option }})
-          </option>
-        {% else %}
-              <option value="{{ class }}:{{ option }}">{{ option }}</option>
-        {% endif %}
+  <p>
+    Status: <br />
+    <select name="status">
+      <option value="">Select status</option>
+      {% for option in classes["Status"] %}
+        <option value="Status:{{ option }}">{{ option }}</option>
       {% endfor %}
     </select>
-    </p>
-    {% endfor %}
+  </p>
+  <p>
+    Rating: <br />
+    <select name="rating">
+      <option value="">Select rating</option>
+      {% for option in classes["Rating"] %}
+        <option value="Rating:{{ option }}">
+          {% for i in range(option|int) %}⭐{% endfor %} ({{ option }})
+        </option>
+      {% endfor %}
+    </select>
+  </p>
     <input type="submit" value="Add manga" /> 
     <p>
       <a href ="/">←Back to Library</a>

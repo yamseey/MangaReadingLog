@@ -16,39 +16,76 @@
       Author: <br />
       <input type="text" name="author" size = "20" value = "{{ item.author }}" maxlength ="100" required />
     </p>
+<p>Categories:</p>
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px; max-width: 700px;">
+  {% for option in all_classes["Category"] %}
+    <label class="tag">
+      <input type="checkbox" name="categories" value="Category:{{ option }}"
+        {% if option in categories %}checked{% endif %}>
+      <span>{{ option }}</span>
+    </label>
+  {% endfor %}
+</div>
+
+<style>
+.tag input {
+  display: none;
+}
+
+.tag span {
+  padding: 4px 10px;
+  border: 1px solid #bbb;
+  border-radius: 999px;
+  background-color: #f4f4f4;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.2s;
+}
+.tag span {
+  background-color: #f8f1e8;
+  border: 1px solid #e0d5c6;
+  color: #6b5b4d;
+}
+.tag input:checked + span {
+  background-color: #ecdcc8;
+  border-color: #cbbba6;
+  color: #4a3f35;
+}
+.tag span:hover {
+  background-color: #eee4d7;
+}
+</style>
     <p>
       Synopsis: <br />
       <textarea name="description" rows="8" cols="60" maxlength ="1000" required>{{ item.description }}</textarea>
     </p>
     <input type="hidden" name="item_id" value="{{ item.id }}" />
-{% for class in all_classes %}
-  <p>
-    {{ class }}: <br />
-    <select name="classes">
-      <option value="">Select {{ class.lower() }}</option>
+    <p>
+      Status: <br />
+      <select name="status">
+        <option value="">Select status</option>
+        {% for option in all_classes["Status"] %}
+          <option value="Status:{{ option }}"
+            {% if classes["Status"] == option %}selected{% endif %}>
+            {{ option }}
+          </option>
+        {% endfor %}
+      </select>
+    </p>
 
-      {% for option in all_classes[class] %}
-        {% if classes[class] == option %}
-          <option value="{{ class }}:{{ option }}" selected>
-            {% if class == "Rating" %}
-              {% for i in range(option|int) %}⭐{% endfor %} ({{ option }})
-            {% else %}
-              {{ option }}
-            {% endif %}
+    <p>
+      Rating: <br />
+      <select name="rating">
+        <option value="">Select rating</option>
+        {% for option in all_classes["Rating"] %}
+          <option value="Rating:{{ option }}"
+            {% if classes["Rating"] == option %}selected{% endif %}>
+            {% for i in range(option|int) %}⭐{% endfor %} ({{ option }})
           </option>
-        {% else %}
-          <option value="{{ class }}:{{ option }}">
-            {% if class == "Rating" %}
-              {% for i in range(option|int) %}⭐{% endfor %} ({{ option }})
-            {% else %}
-              {{ option }}
-            {% endif %}
-          </option>
-        {% endif %}
-      {% endfor %}
-    </select>
-  </p>
-{% endfor %}
+        {% endfor %}
+      </select>
+    </p>
     <input type="submit" value="Edit manga" />
   </form>
 </body>
