@@ -99,6 +99,7 @@
   </div>
 {% endfor %}
 
+{% if session.user_id  %}
 <h2 style="margin-bottom: 5px;">New review</h2>
 <form action="/create_review" method="post">
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
@@ -110,6 +111,7 @@
   <input type="submit" value="Post review" />
   </p>
 </form>
+{% endif %}
 <p>
   <a href ="/">←Back to Library</a>
 </p>
