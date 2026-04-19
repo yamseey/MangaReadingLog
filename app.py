@@ -1,3 +1,4 @@
+import secrets
 import sqlite3
 from flask import Flask
 from flask import abort, make_response, redirect, render_template, request, session
@@ -12,6 +13,12 @@ app.secret_key = config.secret_key
 
 def require_login():
     if "user_id" not in session:
+        abort(403)
+
+def check_csrf():
+    if "csrf_token" not in request.form:
+        abort(403)
+    if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
 
 @app.route("/")
@@ -62,12 +69,14 @@ def show_image(image_id):
 @app.route("/new_item")
 def new_item():
     require_login()
+
     classes = items.get_all_classes()
     return render_template("new_item.html", classes=classes)
 
 @app.route("/create_item", methods=["POST"])
 def create_item():
     require_login()
+    check_csrf()
 
     title = request.form["title"]
     if not title or len(title) > 100:
@@ -109,6 +118,7 @@ def create_item():
 @app.route("/create_review", methods=["POST"])
 def create_review():
     require_login()
+    check_csrf()
 
     review = request.form["review"]
     item_id = request.form["item_id"]
@@ -116,8 +126,6 @@ def create_review():
     if not item:
         abort(403)
     user_id = session["user_id"]
-
-    all_classes = items.get_all_classes()
 
     items.add_review(item_id, user_id, review)
 
@@ -160,6 +168,8 @@ def edit_images(item_id):
 @app.route("/add_image", methods=["POST"])
 def add_image():
     require_login()
+    check_csrf()
+
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
     if not item:
@@ -181,6 +191,8 @@ def add_image():
 @app.route("/remove_image", methods=["POST"])
 def remove_image ():
     require_login()
+    check_csrf()
+
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
     if not item:
@@ -195,6 +207,8 @@ def remove_image ():
 @app.route("/update_item", methods=["POST"])
 def update_item():
     require_login()
+    check_csrf()
+
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
     if not item:
@@ -241,6 +255,7 @@ def update_item():
 @app.route("/remove_item/<int:item_id>", methods=["GET", "POST"])
 def remove_item(item_id):
     require_login()
+
     item = items.get_item(item_id)
     if not item:
         abort(404)
@@ -251,6 +266,7 @@ def remove_item(item_id):
         return render_template("remove_item.html", item=item)
 
     if request.method == "POST":
+        check_csrf()
         if "remove" in request.form:
             items.remove_item(item_id)
             return redirect("/")
@@ -277,6 +293,7 @@ def create():
     user_id = users.check_login(username, password1)
     session["user_id"] = user_id
     session["username"] = username
+    session["csrf_token"] = secrets.token_hex(16)
     session["message"] = "Account created successfully!"
 
     return redirect("/")
@@ -294,6 +311,7 @@ def login():
     if user_id:
         session["user_id"] = user_id
         session["username"] = username
+        session["csrf_token"] = secrets.token_hex(16)
         return redirect("/")
     else:
         return render_template("login.html", error="Invalid username or password.")
@@ -303,5 +321,3 @@ def logout():
     del session["user_id"]
     del session["username"]
     return redirect("/")
-
-

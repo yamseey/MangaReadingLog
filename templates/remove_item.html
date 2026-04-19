@@ -10,6 +10,7 @@
   <p>{{ item.title }} </p>
   <p>Are you sure you want to delete this manga from the library?</p>
   <form action="/remove_item/{{ item.id }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" name = "remove" value = "Delete manga">
     <input type="submit" name = "back" value = "Cancel">
   </form>

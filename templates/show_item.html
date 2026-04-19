@@ -101,6 +101,7 @@
 
 <h2 style="margin-bottom: 5px;">New review</h2>
 <form action="/create_review" method="post">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   <textarea name="review" rows="4" cols="45" maxlength="1000" required
     style="resize: vertical; padding: 8px;"></textarea>
 

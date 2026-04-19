@@ -8,6 +8,7 @@
 <body>
   <h1>Add manga</h1>
   <form action="/create_item" method="post">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <p>
       Title: <br />
       <input type="text" name="title" size ="40" maxlength="100" required />
