@@ -4,8 +4,12 @@
 <head>
   <title>Add manga</title>
 </head>
+  <body style="
+    background-color: #f6efe6;
+    color: #3f342c;
+    font-family: Arial, sans-serif;
+    padding: 24px;">
 
-<body>
   <h1>Add manga</h1>
   <form action="/create_item" method="post">
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
@@ -33,25 +37,21 @@
 }
 .tag span {
   padding: 4px 10px;
-  border: 1px solid #bbb;
+  border: 1px solid #d6c2a8;
   border-radius: 999px;
-  background-color: #f4f4f4;
+  background-color: #f0e2cf;
+  color: #5a4636;
   cursor: pointer;
   font-size: 13px;
   transition: 0.2s;
 }
-.tag span {
-  background-color: #f8f1e8;
-  border: 1px solid #e0d5c6;
-  color: #6b5b4d;
-}
 .tag input:checked + span {
-  background-color: #ecdcc8;
-  border-color: #cbbba6;
-  color: #4a3f35;
+    background-color: #d8bfa3;
+    border-color: #c2a383;
+    color: #3f2f24;
 }
 .tag span:hover {
-  background-color: #eee4d7;
+  background-color: #e8d4bb;
 }
 </style>
     <p>
@@ -78,11 +78,25 @@
       {% endfor %}
     </select>
   </p>
-    <input type="submit" value="Add manga" /> 
-    <p>
-      <a href ="/">←Back to Library</a>
-    </p>
-  </form>
+    <input type="submit" value="Add manga" style="
+      padding: 4px 8px;
+      border: 1px solid #d6c2a8;
+      border-radius: 3px;
+      background-color: #ffffff;
+      color: #5a4636;
+      cursor: pointer;
+      ">
+  <a href="/" style="
+    display: block;
+    margin-top: 16px;
+    color: #7a6a5c;
+    text-decoration: none;
+    font-size: 14px;
+"
+    onmouseover="this.style.textDecoration='underline'; this.style.color='#5a4636'"
+    onmouseout="this.style.textDecoration='none'; this.style.color='#7a6a5c'">
+  ← Back to Library
+  </a>
+</form>
 </body>
-
 </html>

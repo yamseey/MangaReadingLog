@@ -16,9 +16,23 @@
     <li><a href="/item/{{ item.id }}">{{ item.title }}</a></li>
     {% endfor %}
   </ul>
-  <p>
-    <a href ="/">←Back to Library</a>
-  </p>
+<p>
+    <a href="/" style="
+        display: block;
+        margin-top: 16px;
+        color: #7a6a5c;
+        text-decoration: none;
+        font-size: 14px;
+        "
+        onmouseover="this.style.textDecoration='underline'; this.style.color='#5a4636'"
+        onmouseout="this.style.textDecoration='none'; this.style.color='#7a6a5c'">
+        ← Back to Library
+    </a>
+</p>
 </body>
-
+  <body style="
+    background-color: #f6efe6;
+    color: #3f342c;
+    font-family: Arial, sans-serif;
+    padding: 24px;">
 </html>

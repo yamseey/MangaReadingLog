@@ -5,17 +5,39 @@
   <title>Search Manga</title>
 </head>
 
-<body>
+<body style="
+    background-color: #f6efe6;
+    color: #3f342c;
+    font-family: Arial, sans-serif;
+    padding: 24px;">
+
   <h1> Search Manga </h1>
     <form action="/find_item" method = "get">
         <p>
             <input type="text" name="query" value = "{{ query }}" placeholder="Search by title or synopsis..." size = "30">
         </p>
-        <input type="submit" value = "Search">
+        <input type="submit" value = "Search" style="
+            padding: 4px 8px;
+            border: 1px solid #d6c2a8;
+            border-radius: 3px;
+            background-color: #ffffff;
+            color: #5a4636;
+            cursor: pointer;
+            ">
     </form>
 
 <p>
-    <a href="/">←Back to Library</a>
+    <a href="/" style="
+        display: block;
+        margin-top: 16px;
+        color: #7a6a5c;
+        text-decoration: none;
+        font-size: 14px;
+        "
+        onmouseover="this.style.textDecoration='underline'; this.style.color='#5a4636'"
+        onmouseout="this.style.textDecoration='none'; this.style.color='#7a6a5c'">
+        ← Back to Library
+    </a>
 </p>
 
 {% if query %}
@@ -28,5 +50,4 @@
 </ul>
 {% endif %}
 </body>
-
 </html>

@@ -23,7 +23,14 @@
         <form action="/remove_image" method="post">
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
         <input type="hidden" name="item_id" value="{{ item.id }}">
-        <input type="submit" value="Remove cover">
+        <input type="submit" value="Remove cover" style="
+            padding: 4px 8px;
+            border: 1px solid #d6c2a8;
+            border-radius: 3px;
+            background-color: #ffffff;
+            color: #5a4636;
+            cursor: pointer;
+            ">
         </form>
       {% else %}
         <div style="
@@ -53,7 +60,14 @@
         <p>
             Cover image: <input type="file" name="image" accept=".png">
         </p>
-        <input type="submit" value="Upload cover">
+        <input type="submit" value="Upload cover" style="
+            padding: 4px 8px;
+            border: 1px solid #d6c2a8;
+            border-radius: 3px;
+            background-color: #ffffff;
+            color: #5a4636;
+            cursor: pointer;
+            ">
         </form>
 
   </div>
@@ -62,5 +76,9 @@
         <a href="/item/{{ item.id }}">←Back to Library</a>
     </p>
 </body>
-
+  <body style="
+    background-color: #f6efe6;
+    color: #3f342c;
+    font-family: Arial, sans-serif;
+    padding: 24px;">
 </html>

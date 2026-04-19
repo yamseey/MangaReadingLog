@@ -14,22 +14,69 @@
   {% if message %}
   <p style="color:green;">{{ message }}</p>
   {% endif %}
-  <p>
-    <a href="/logout">Logout</a>
-  </p>
-  <p>
-    <a href="/new_item">Add manga</a>
-  </p>
-  {% else %}
-  <p>
-    <a href="/login">Log in</a>
-    <a href="/register">Register</a>
-  </p>
-  {% endif %}
+  <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px;">
+    <a href="/logout" style="
+      text-decoration: none;
+      padding: 8px 14px;
+      border: 1px solid #e0d5c6;
+      border-radius: 999px;
+      background-color: #efe3d3;
+      color: #5f4e42;">
+      Logout
+    </a>
 
-  <p>
-    <a href="/find_item">Search Manga</a>
-  </p>
+    <a href="/new_item" style="
+      text-decoration: none;
+      padding: 8px 14px;
+      border: 1px solid #e0d5c6;
+      border-radius: 999px;
+      background-color: #efe3d3;
+      color: #5f4e42;">
+      Add manga
+    </a>
+
+    <a href="/find_item" style="
+      text-decoration: none;
+      padding: 8px 14px;
+      border: 1px solid #e0d5c6;
+      border-radius: 999px;
+      background-color: #efe3d3;
+      color: #5f4e42;">
+      Search
+  </a>
+  </div>
+
+  {% else %}
+  <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px;">
+    <a href="/login" style="
+      text-decoration: none;
+      padding: 8px 14px;
+      border: 1px solid #e0d5c6;
+      border-radius: 999px;
+      background-color: #efe3d3;
+      color: #5f4e42;">
+      Login
+    </a>
+    <a href="/register" style="
+      text-decoration: none;
+      padding: 8px 14px;
+      border: 1px solid #e0d5c6;
+      border-radius: 999px;
+      background-color: #efe3d3;
+      color: #5f4e42;">
+      Register
+    </a>
+    <a href="/find_item" style="
+      text-decoration: none;
+      padding: 8px 14px;
+      border: 1px solid #e0d5c6;
+      border-radius: 999px;
+      background-color: #efe3d3;
+      color: #5f4e42;">
+      Search
+      </a>
+  {% endif %}
+</div>
 
   <h2>Library</h2>
 
@@ -40,5 +87,9 @@
   </ul>
 
 </body>
-
+  <body style="
+    background-color: #f6efe6;
+    color: #3f342c;
+    font-family: Arial, sans-serif;
+    padding: 24px;">
 </html>

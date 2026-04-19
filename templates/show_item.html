@@ -5,9 +5,14 @@
   <title>{{ item.title }}</title>
 </head>
 
-<body>
-  <h1>{{ item.title }}</h1>
-  {% if session.user_id == item.user_id %}
+<body style="
+  background-color: #f6efe6;
+  color: #3f342c;
+  font-family: Arial, sans-serif;
+  padding: 24px;">
+
+<h1>{{ item.title }}</h1>
+{% if session.user_id == item.user_id %}
 <p>
   <a href="/edit_item/{{ item.id }}">Edit</a>
   <a href="/remove_item/{{ item.id }}">Delete</a>
@@ -25,7 +30,7 @@
         max-width: 100%;
         height: auto;
         border-radius: 10px;
-        border: 1px solid #e0d5c6;
+        border: 1px solid #d6c2a8;
         display: block;
         margin-bottom: 10px;">
     {% endfor %}
@@ -43,11 +48,11 @@
       {% if class.title == "Category" %}
         <span style="
           padding: 4px 10px;
-          border: 1px solid #e0d5c6;
+          border: 1px solid #d6c2a8;
           border-radius: 999px;
-          background-color: #f8f1e8;
+          background-color: #f0e2cf;
           font-size: 13px;
-          color: #6b5b4d;">
+          color: #5a4636;">
           {{ class.value }}
         </span>
       {% endif %}
@@ -86,9 +91,9 @@
     max-width: 600px;
     margin-bottom: 12px;
     padding: 12px;
-    border: 1px solid #e0d5c6;
+    border: 1px solid #d6c2a8;
     border-radius: 10px;
-    background-color: #fbf7f2;">
+    background-color: #f3e7d6;">
 
   <p style="margin: 0 0 6px 0;">
       {{ review.review }}
@@ -108,13 +113,29 @@
 
   <p style="margin-top: 0px;">
   <input type="hidden" name="item_id" value="{{ item.id }}">
-  <input type="submit" value="Post review" />
+  <input type="submit" value="Post review" style="
+      padding: 4px 8px;
+      border: 1px solid #d6c2a8;
+      border-radius: 3px;
+      background-color: #ffffff;
+      color: #5a4636;
+      cursor: pointer;
+      ">
   </p>
 </form>
 {% endif %}
 <p>
-  <a href ="/">←Back to Library</a>
+    <a href="/" style="
+        display: block;
+        margin-top: 16px;
+        color: #7a6a5c;
+        text-decoration: none;
+        font-size: 14px;
+        "
+        onmouseover="this.style.textDecoration='underline'; this.style.color='#5a4636'"
+        onmouseout="this.style.textDecoration='none'; this.style.color='#7a6a5c'">
+        ← Back to Library
+    </a>
 </p>
 </body>
-
 </html>
