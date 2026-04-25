@@ -113,6 +113,9 @@
 
   <p style="margin-top: 0px;">
   <input type="hidden" name="item_id" value="{{ item.id }}">
+  {% if error %}
+    <p style="color:red;">{{ error }}</p>
+  {% endif %}
   <input type="submit" value="Post review" style="
       padding: 4px 8px;
       border: 1px solid #d6c2a8;

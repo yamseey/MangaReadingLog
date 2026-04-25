@@ -4,6 +4,7 @@
 <head>
   <title>Add manga</title>
 </head>
+
   <body style="
     background-color: #f6efe6;
     color: #3f342c;
@@ -11,6 +12,9 @@
     padding: 24px;">
 
   <h1>Add manga</h1>
+  {% if error %}
+    <p style="color:red;">{{ error }}</p>
+  {% endif %}
   <form action="/create_item" method="post">
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <p>

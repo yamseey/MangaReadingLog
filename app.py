@@ -78,18 +78,19 @@ def create_item():
     require_login()
     check_csrf()
 
-    title = request.form["title"]
-    if not title or len(title) > 100:
-        abort(403)
-    description = request.form["description"]
-    if not description or len(description) > 1000:
-        abort(403)
-    author = request.form["author"]
-    if not author or len(author) > 100:
-        abort(403)
-    user_id = session["user_id"]
-
     all_classes = items.get_all_classes()
+
+    title = request.form["title"].strip()
+    description = request.form["description"].strip()
+    author = request.form["author"].strip()
+
+    if not title or not description or not author:
+        return render_template("new_item.html", classes=all_classes, error="All fields are required.")
+
+    if len(title) > 100 or len(description) > 1000 or len(author) > 100:
+        return render_template("new_item.html", classes=all_classes,error="Input is too long.")
+
+    user_id = session["user_id"]
 
     classes = []
     for field_name in ["status", "rating"]:
@@ -120,13 +121,20 @@ def create_review():
     require_login()
     check_csrf()
 
-    review = request.form["review"]
+    review = request.form["review"].strip()
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
+
     if not item:
         abort(403)
-    user_id = session["user_id"]
 
+    if not review or len(review) > 1000:
+        classes = items.get_classes(item_id)
+        reviews = items.get_reviews(item_id)
+        images = items.get_images(item_id)
+        return render_template("show_item.html", item=item, classes=classes, reviews=reviews, images=images, error="Review cannot be empty.")
+
+    user_id = session["user_id"]
     items.add_review(item_id, user_id, review)
 
     return redirect("/item/" + str(item_id))
@@ -189,7 +197,7 @@ def add_image():
     return redirect("/images/" + str(item_id))
 
 @app.route("/remove_image", methods=["POST"])
-def remove_image ():
+def remove_image():
     require_login()
     check_csrf()
 
@@ -216,13 +224,13 @@ def update_item():
     if item["user_id"] != session["user_id"]:
         abort(403)
 
-    title = request.form["title"]
+    title = request.form["title"].strip()
     if not title or len(title) > 100:
         abort(403)
-    description = request.form["description"]
+    description = request.form["description"].strip()
     if not description or len(description) > 1000:
         abort(403)
-    author = request.form["author"]
+    author = request.form["author"].strip()
     if not author or len(author) > 100:
         abort(403)
 
@@ -279,9 +287,13 @@ def register():
 
 @app.route("/create", methods=["POST"])
 def create():
-    username = request.form["username"]
+    username = request.form["username"].strip()
     password1 = request.form["password1"]
     password2 = request.form["password2"]
+
+    if not username or not password1 or not password2:
+        return render_template("register.html", error="All fields are required.")
+
     if password1 != password2:
         return render_template("register.html", error="The passwords do not match.")
 
@@ -304,17 +316,21 @@ def login():
         return render_template("login.html")
 
     if request.method == "POST":
-        username = request.form["username"]
+        username = request.form["username"].strip()
         password = request.form["password"]
 
+        if not username or not password:
+            return render_template("login.html", error="Username and password are required.")
+
         user_id = users.check_login(username, password)
-    if user_id:
-        session["user_id"] = user_id
-        session["username"] = username
-        session["csrf_token"] = secrets.token_hex(16)
-        return redirect("/")
-    else:
-        return render_template("login.html", error="Invalid username or password.")
+
+        if user_id:
+            session["user_id"] = user_id
+            session["username"] = username
+            session["csrf_token"] = secrets.token_hex(16)
+            return redirect("/")
+        else:
+            return render_template("login.html", error="Invalid username or password.")
 
 @app.route("/logout")
 def logout():
