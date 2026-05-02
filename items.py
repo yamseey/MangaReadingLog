@@ -23,7 +23,7 @@ def add_item(title, description, author, user_id, classes):
     for title, value in classes:
         db.execute(sql, [item_id, title, value])
 
-    item_id = db.last_insert_id()
+    return item_id
 
 def add_review(item_id, user_id, review):
     sql = """INSERT INTO reviews (item_id, user_id, review) VALUES (?, ?, ?)"""

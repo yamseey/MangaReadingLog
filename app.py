@@ -2,9 +2,7 @@ import secrets
 import sqlite3
 from flask import Flask
 from flask import abort, make_response, redirect, render_template, request, session
-from werkzeug.security import generate_password_hash, check_password_hash
 import config
-import db
 import items
 import users
 
@@ -87,7 +85,7 @@ def create_item():
     if not title or not description or not author:
         return render_template("new_item.html", classes=all_classes, error="All fields are required.")
 
-    if len(title) > 100 or len(description) > 1000 or len(author) > 100:
+    if len(title) > 200 or len(description) > 1000 or len(author) > 100:
         return render_template("new_item.html", classes=all_classes,error="Input is too long.")
 
     user_id = session["user_id"]
@@ -111,10 +109,15 @@ def create_item():
             if class_value not in all_classes[class_title]:
                 abort(403)
             classes.append((class_title, class_value))
+    
+    category_selected = any(class_title == "Category" for class_title, _ in classes)
 
-    items.add_item(title, description, author, user_id, classes)
+    if not category_selected:
+        return render_template("new_item.html", classes=all_classes, error="Please select at least one category.")
 
-    return redirect("/")
+    item_id = items.add_item(title, description, author, user_id, classes)
+
+    return redirect("/item/" + str(item_id))
 
 @app.route("/create_review", methods=["POST"])
 def create_review():
@@ -225,7 +228,7 @@ def update_item():
         abort(403)
 
     title = request.form["title"].strip()
-    if not title or len(title) > 100:
+    if not title or len(title) > 200:
         abort(403)
     description = request.form["description"].strip()
     if not description or len(description) > 1000:
@@ -334,6 +337,6 @@ def login():
 
 @app.route("/logout")
 def logout():
-    del session["user_id"]
-    del session["username"]
+    session.pop("user_id", None)
+    session.pop("username", None)
     return redirect("/")
