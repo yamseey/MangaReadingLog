@@ -1,17 +1,22 @@
 import secrets
 import sqlite3
+
 from flask import Flask
 from flask import abort, make_response, redirect, render_template, request, session
+
 import config
 import items
 import users
 
+
 app = Flask(__name__)
-app.secret_key = config.secret_key
+app.secret_key = config.SECRET_KEY
+
 
 def require_login():
     if "user_id" not in session:
         abort(403)
+
 
 def check_csrf():
     if "csrf_token" not in request.form:
@@ -19,19 +24,22 @@ def check_csrf():
     if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
 
+
 @app.route("/")
 def index():
     all_items = items.get_items()
     message = session.pop("message", None)
     return render_template("index.html", items=all_items, message=message)
 
+
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
     user = users.get_user(user_id)
     if not user:
         abort(404)
-    items = users.get_items(user_id)
-    return render_template("show_user.html", user=user, items=items)
+    user_items = users.get_items(user_id)
+    return render_template("show_user.html", user=user, items=user_items)
+
 
 @app.route("/find_item")
 def find_item():
@@ -44,6 +52,7 @@ def find_item():
         results = []
     return render_template("find_item.html", query=query, results=results)
 
+
 @app.route("/item/<int:item_id>")
 def show_item(item_id):
     item = items.get_item(item_id)
@@ -52,7 +61,14 @@ def show_item(item_id):
     classes = items.get_classes(item_id)
     reviews = items.get_reviews(item_id)
     images = items.get_images(item_id)
-    return render_template("show_item.html", item=item, classes=classes, reviews=reviews, images=images)
+    return render_template(
+        "show_item.html",
+        item=item,
+        classes=classes,
+        reviews=reviews,
+        images=images,
+    )
+
 
 @app.route("/image/<int:image_id>")
 def show_image(image_id):
@@ -64,12 +80,14 @@ def show_image(image_id):
     response.headers.set("Content-Type", "image/png")
     return response
 
+
 @app.route("/new_item")
 def new_item():
     require_login()
 
     classes = items.get_all_classes()
     return render_template("new_item.html", classes=classes)
+
 
 @app.route("/create_item", methods=["POST"])
 def create_item():
@@ -83,10 +101,18 @@ def create_item():
     author = request.form["author"].strip()
 
     if not title or not description or not author:
-        return render_template("new_item.html", classes=all_classes, error="All fields are required.")
+        return render_template(
+            "new_item.html",
+            classes=all_classes,
+            error="All fields are required.",
+        )
 
     if len(title) > 200 or len(description) > 1000 or len(author) > 100:
-        return render_template("new_item.html", classes=all_classes,error="Input is too long.")
+        return render_template(
+            "new_item.html",
+            classes=all_classes,
+            error="Input is too long.",
+        )
 
     user_id = session["user_id"]
 
@@ -109,15 +135,20 @@ def create_item():
             if class_value not in all_classes[class_title]:
                 abort(403)
             classes.append((class_title, class_value))
-    
+
     category_selected = any(class_title == "Category" for class_title, _ in classes)
 
     if not category_selected:
-        return render_template("new_item.html", classes=all_classes, error="Please select at least one category.")
+        return render_template(
+            "new_item.html",
+            classes=all_classes,
+            error="Please select at least one category.",
+        )
 
     item_id = items.add_item(title, description, author, user_id, classes)
 
     return redirect("/item/" + str(item_id))
+
 
 @app.route("/create_review", methods=["POST"])
 def create_review():
@@ -135,12 +166,21 @@ def create_review():
         classes = items.get_classes(item_id)
         reviews = items.get_reviews(item_id)
         images = items.get_images(item_id)
-        return render_template("show_item.html", item=item, classes=classes, reviews=reviews, images=images, error="Review cannot be empty.")
+
+        return render_template(
+            "show_item.html",
+            item=item,
+            classes=classes,
+            reviews=reviews,
+            images=images,
+            error="Review cannot be empty.",
+        )
 
     user_id = session["user_id"]
     items.add_review(item_id, user_id, review)
 
     return redirect("/item/" + str(item_id))
+
 
 @app.route("/edit_item/<int:item_id>")
 def edit_item(item_id):
@@ -161,7 +201,14 @@ def edit_item(item_id):
         else:
             classes[entry["title"]] = entry["value"]
 
-    return render_template("edit_item.html", item=item, classes=classes, all_classes=all_classes, categories=categories)
+    return render_template(
+        "edit_item.html",
+        item=item,
+        classes=classes,
+        all_classes=all_classes,
+        categories=categories,
+    )
+
 
 @app.route("/images/<int:item_id>")
 def edit_images(item_id):
@@ -173,8 +220,8 @@ def edit_images(item_id):
         abort(403)
 
     images = items.get_images(item_id)
-
     return render_template("images.html", item=item, images=images)
+
 
 @app.route("/add_image", methods=["POST"])
 def add_image():
@@ -199,6 +246,7 @@ def add_image():
     items.add_image(item_id, image)
     return redirect("/images/" + str(item_id))
 
+
 @app.route("/remove_image", methods=["POST"])
 def remove_image():
     require_login()
@@ -212,8 +260,8 @@ def remove_image():
         abort(403)
 
     items.remove_image(item_id)
-
     return redirect("/images/" + str(item_id))
+
 
 @app.route("/update_item", methods=["POST"])
 def update_item():
@@ -260,8 +308,8 @@ def update_item():
             classes.append((class_title, class_value))
 
     items.update_item(item_id, title, description, author, classes)
-
     return redirect("/item/" + str(item_id))
+
 
 @app.route("/remove_item/<int:item_id>", methods=["GET", "POST"])
 def remove_item(item_id):
@@ -281,12 +329,16 @@ def remove_item(item_id):
         if "remove" in request.form:
             items.remove_item(item_id)
             return redirect("/")
-        else:
-            return redirect("/item/" + str(item_id))
+
+        return redirect("/item/" + str(item_id))
+
+    return redirect("/")
+
 
 @app.route("/register")
 def register():
     return render_template("register.html")
+
 
 @app.route("/create", methods=["POST"])
 def create():
@@ -313,6 +365,7 @@ def create():
 
     return redirect("/")
 
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
@@ -323,7 +376,10 @@ def login():
         password = request.form["password"]
 
         if not username or not password:
-            return render_template("login.html", error="Username and password are required.")
+            return render_template(
+                "login.html",
+                error="Username and password are required.",
+            )
 
         user_id = users.check_login(username, password)
 
@@ -332,8 +388,14 @@ def login():
             session["username"] = username
             session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
-        else:
-            return render_template("login.html", error="Invalid username or password.")
+
+        return render_template(
+            "login.html",
+            error="Invalid username or password.",
+        )
+
+    return redirect("/")
+
 
 @app.route("/logout")
 def logout():
