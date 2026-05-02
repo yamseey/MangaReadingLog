@@ -4,15 +4,17 @@ MangaReadingLog is a web application where users can keep track of manga they ha
 ## Features
 
 - Users can create an account and log in to the application.
-- Users can keep track of manga they have read and write reviews about them.
-- Users can add their own manga entries, edit them or delete them.
-- Users can view added manga reviews.
-- Users can search for manga by title.
-- The user page shows how many manga entries the user has added and a list of those entries.
-- Users can assign one or more categories to a manga (like for example: romance, fantasy, comedy)
-- Users can add reviews and ratings to manga, which are shown on the manga page.
+- Users can add manga entries with a title, author, synopsis, categories, status, and rating.
+- Users can assign one or more categories to a manga (for example: romance, fantasy, comedy).
+- Users can edit and delete their own manga entries.
+- Users can view manga reviews.
+- Users can upload a PNG cover image for a manga.
+- Users can write reviews on manga pages.
+- Users can view reviews written by other users.
+- Users can search for manga by title or synopsis.
+- The user page shows how many manga entries the user has added and lists those entries.
 
-In this application the main data object is a manga and the secondary data object is a review related to the manga.
+In this application, the main data object is a manga, and the secondary data object is a review related to the manga.
 
 ## How to run the application
 Clone the repository:
@@ -31,12 +33,11 @@ Activate the environment:
 
 ```
 $ source venv/Scripts/activate #Windows
-$ source venv/bin/activate #Linux
-$ venv/bin/activate #Mac
+$ source venv/bin/activate #Linux / Mac
 ```
 
 
-Install `flask`:
+Install Flask:
 
 ```
 $ pip install flask

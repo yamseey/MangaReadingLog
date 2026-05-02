@@ -59,7 +59,7 @@ users.py:23:0: C0116: Missing function or method docstring (missing-function-doc
 
 ------------------------------------------------------------------
 Your code has been rated at 8.70/10 (previous run: 8.70/10, +0.00)
-
+```
 
 Next, the contents of the report are explained in more detail, along with reasoning for why certain issues were not fixed.
 
