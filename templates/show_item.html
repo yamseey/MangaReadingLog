@@ -13,10 +13,39 @@
 
 <h1 style="overflow-wrap: break-word; word-break: break-word;">{{ item.title }}</h1>
 {% if session.user_id == item.user_id %}
-<p>
-  <a href="/edit_item/{{ item.id }}">Edit</a>
-  <a href="/remove_item/{{ item.id }}">Delete</a>
-  <a href="/images/{{ item.id }}">Edit/Add manga cover</a>
+<p style="display: flex; gap: 8px; flex-wrap: wrap;">
+  <a href="/edit_item/{{ item.id }}" style="
+      text-decoration: none;
+      padding: 4px 8px;
+      border: 1px solid #d6c2a8;
+      border-radius: 4px;
+      background-color: #fbf7f2;
+      color: #5a4636;
+      font-size: 13px;">
+      Edit
+  </a>
+
+  <a href="/remove_item/{{ item.id }}" style="
+      text-decoration: none;
+      padding: 4px 8px;
+      border: 1px solid #d6c2a8;
+      border-radius: 4px;
+      background-color: #fbf7f2;
+      color: #5a4636;
+      font-size: 13px;">
+      Delete
+  </a>
+
+  <a href="/images/{{ item.id }}" style="
+      text-decoration: none;
+      padding: 4px 8px;
+      border: 1px solid #d6c2a8;
+      border-radius: 4px;
+      background-color: #fbf7f2;
+      color: #5a4636;
+      font-size: 13px;">
+      Edit cover
+  </a>
 </p>
 {% endif %}
 
@@ -82,7 +111,19 @@
   {% endfor %}
 </div>
 </div>
-
+<p>
+    <a href="/" style="
+        display: block;
+        margin-top: 16px;
+        color: #7a6a5c;
+        text-decoration: none;
+        font-size: 14px;
+        "
+        onmouseover="this.style.textDecoration='underline'; this.style.color='#5a4636'"
+        onmouseout="this.style.textDecoration='none'; this.style.color='#7a6a5c'">
+        ← Back to Library
+    </a>
+</p>
 <h2 style="margin-bottom: 8px;">Reviews</h2>
 
 {% for review in reviews %}
@@ -130,18 +171,6 @@
   </p>
 </form>
 {% endif %}
-<p>
-    <a href="/" style="
-        display: block;
-        margin-top: 16px;
-        color: #7a6a5c;
-        text-decoration: none;
-        font-size: 14px;
-        "
-        onmouseover="this.style.textDecoration='underline'; this.style.color='#5a4636'"
-        onmouseout="this.style.textDecoration='none'; this.style.color='#7a6a5c'">
-        ← Back to Library
-    </a>
-</p>
+
 </body>
 </html>

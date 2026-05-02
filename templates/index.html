@@ -5,8 +5,18 @@
   <title>MangaReadingLog</title>
 </head>
 
-<body>
-  <h1> MangaReadingLog </h1>
+  <body style="
+    background-color: #f6efe6;
+    color: #3f342c;
+    font-family: Arial, sans-serif;
+    padding: 24px;">
+
+  <div style="margin-bottom: 20px;">
+    <h1 style="margin-bottom: 4px;">MangaReadingLog</h1>
+    <p style="margin: 0; color: #7a6a5c; font-size: 13px;">
+      Track your manga and share your thoughts.
+    </p>
+  </div>
   {% if session.username %}
   <p>
     Welcome back, {{ session.username }}!
@@ -80,16 +90,19 @@
 
   <h2>Library</h2>
 
-  <ul>
-    {% for item in items%}
-    <li><a href="/item/{{ item.id }}">{{item.title}}</a></li>
-    {% endfor %}
-  </ul>
-
+<ul style="list-style: none; padding: 0; margin: 0;">
+  {% for item in items %}
+    <li style="margin-bottom: 8px;">
+      <a href="/item/{{ item.id }}" style="
+          text-decoration: none;
+          color: #5a4636;
+          font-size: 15px;"
+         onmouseover="this.style.textDecoration='underline'; this.style.color='#3f342c'"
+         onmouseout="this.style.textDecoration='none'; this.style.color='#5a4636'">
+          ✿ {{ item.title }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
 </body>
-  <body style="
-    background-color: #f6efe6;
-    color: #3f342c;
-    font-family: Arial, sans-serif;
-    padding: 24px;">
 </html>
