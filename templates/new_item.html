@@ -73,8 +73,8 @@
   </p>
   <p>
   <label for="rating">Rating:</label><br />
-    <select id="rating" name="rating">
-      <option value="">Select rating</option>
+  <select id="rating" name="rating">
+    <option value="">Select rating</option>
       {% for option in classes["Rating"] %}
         <option value="Rating:{{ option }}">
           {% for i in range(option|int) %}⭐{% endfor %} ({{ option }})
