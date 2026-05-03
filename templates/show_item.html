@@ -54,7 +54,7 @@
 
   <div>
     {% for image in images %}
-      <img src="/image/{{ image.id }}" style="
+    <img src="/image/{{ image.id }}" alt="Cover image for {{ item.title }}" style="
         width: 220px;
         max-width: 100%;
         height: auto;
@@ -88,9 +88,9 @@
     {% endfor %}
   </div>
   <p style="max-width: 700px; line-height: 1.5; overflow-wrap: break-word; word-break: break-word;">
-    Synopsis: <br>
-    {{ item.description }}
-  </p>
+    Synopsis:<br>
+    <span style="white-space: pre-wrap;">{{ item.description }}</span>
+    </p>
   {% for class in classes %}
     {% if class.title == "Status" %}
       <p>Status: {{ class.value }}</p>
@@ -136,7 +136,7 @@
     border-radius: 10px;
     background-color: #f3e7d6;">
 
-  <p style="margin: 0 0 6px 0;">
+  <p style="margin: 0 0 6px 0; white-space: pre-wrap;">
       {{ review.review }}
     </p>
     <p style="margin: 0; font-size: 0.85em; color: #555;">
@@ -149,7 +149,8 @@
 <h2 style="margin-bottom: 5px;">New review</h2>
 <form action="/create_review" method="post">
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-  <textarea name="review" rows="4" cols="45" maxlength="1000" required
+  <label for="review">Review:</label><br />
+  <textarea id="review" name="review" rows="4" cols="45" maxlength="1000" required
     style="resize: vertical; padding: 8px;"></textarea>
 
 

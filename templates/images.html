@@ -15,10 +15,10 @@
 
     <div style="display: flex; gap: 30px; align-items: flex-start;">
 
-        <div>
-        {% if images %}
-            {% for image in images %}
-             <img src="/image/{{ image[0] }}" style="
+    <div>
+    {% if images %}
+        {% for image in images %}
+        <img src="/image/{{ image[0] }}" alt="Cover image for {{ item.title }}" style="
             width: 220px;
             height: auto;
             border-radius: 12px;
@@ -63,7 +63,8 @@
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
         <input type="hidden" name="item_id" value="{{ item.id }}">
         <p>
-            Cover image: <input type="file" name="image" accept=".png">
+            <label for="image">Cover image:</label>
+            <input id="image" type="file" name="image" accept=".png">
         </p>
         <p style="font-size: 13px; color: #7a6f63; margin-top: -8px;">
             Allowed format: PNG. Max size: 2 MB.

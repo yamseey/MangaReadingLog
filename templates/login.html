@@ -22,12 +22,12 @@
   {% else %}
   <form action="/login" method="post">
     <p>
-      Username: <br />
-      <input type="text" name="username" maxlength="25" required />
+      <label for="username">Username:</label><br />
+      <input id="username" type="text" name="username" maxlength="25" required />
     </p>
     <p>
-      Password: <br />
-      <input type="password" name="password" required />
+      <label for="password">Password:</label><br />
+      <input id="password" type="password" name="password" required />
     </p>
     {% if error %}
     <p style="color:red;">{{ error }}</p>

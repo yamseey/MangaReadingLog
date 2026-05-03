@@ -18,12 +18,12 @@
   <form action="/create_item" method="post">
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <p>
-      Title: <br />
-      <input type="text" name="title" size ="40" maxlength="200" required />
+      <label for="title">Title:</label><br />
+      <input id="title" type="text" name="title" size="40" maxlength="200" required />
     </p>
     <p>
-      Author: <br />
-      <input type="text" name="author" size = "20" maxlength="100" required/>
+      <label for="author">Author:</label><br />
+      <input id="author" type="text" name="author" size="20" maxlength="100" required />
     </p>
 <p>Categories:</p>
 
@@ -59,12 +59,12 @@
 }
 </style>
     <p>
-      Synopsis: <br />
-      <textarea name="description" rows="8" cols="60" maxlength="1000" required ></textarea>
+      <label for="description">Synopsis:</label><br />
+      <textarea id="description" name="description" rows="8" cols="60" maxlength="1000" required></textarea>
     </p>
   <p>
-    Status: <br />
-    <select name="status">
+    <label for="status">Status:</label><br />
+    <select id="status" name="status">
       <option value="">Select status</option>
       {% for option in classes["Status"] %}
         <option value="Status:{{ option }}">{{ option }}</option>
@@ -72,8 +72,8 @@
     </select>
   </p>
   <p>
-    Rating: <br />
-    <select name="rating">
+  <label for="rating">Rating:</label><br />
+    <select id="rating" name="rating">
       <option value="">Select rating</option>
       {% for option in classes["Rating"] %}
         <option value="Rating:{{ option }}">

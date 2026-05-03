@@ -11,16 +11,16 @@
   font-family: Arial, sans-serif;
   padding: 24px;">
 
-  <h1>Add manga</h1>
+  <h1>Edit manga</h1>
   <form action="/update_item" method="post">
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <p>
-      Title: <br />
-      <input type="text" name="title" value="{{ item.title }}" size ="40" maxlength = "200" required />
+      <label for="title">Title:</label><br />
+      <input id="title" type="text" name="title" value="{{ item.title }}" size="40" maxlength="200" required />
     </p>
     <p>
-      Author: <br />
-      <input type="text" name="author" size = "20" value = "{{ item.author }}" maxlength ="100" required />
+      <label for="author">Author:</label><br />
+      <input id="author" type="text" name="author" size="20" value="{{ item.author }}" maxlength="100" required />
     </p>
 <p>Categories:</p>
 
@@ -63,13 +63,13 @@
 }
 </style>
     <p>
-      Synopsis: <br />
-      <textarea name="description" rows="8" cols="60" maxlength ="1000" required>{{ item.description }}</textarea>
+      <label for="description">Synopsis:</label><br />
+      <textarea id="description" name="description" rows="8" cols="60" maxlength="1000" required>{{ item.description }}</textarea>
     </p>
     <input type="hidden" name="item_id" value="{{ item.id }}" />
     <p>
-      Status: <br />
-      <select name="status">
+      <label for="status">Status:</label><br />
+      <select id="status" name="status">
         <option value="">Select status</option>
         {% for option in all_classes["Status"] %}
           <option value="Status:{{ option }}"
@@ -81,8 +81,8 @@
     </p>
 
     <p>
-      Rating: <br />
-      <select name="rating">
+      <label for="rating">Rating:</label><br />
+      <select id="rating" name="rating">
         <option value="">Select rating</option>
         {% for option in all_classes["Rating"] %}
           <option value="Rating:{{ option }}"

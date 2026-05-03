@@ -14,7 +14,8 @@
   <h1> Search Manga </h1>
     <form action="/find_item" method="get">
     <div style="display: flex; gap: 6px; align-items: center;"> 
-       <input type="text" name="query" value="{{ query }}"
+      <label for="query">Search:</label>
+      <input id="query" type="text" name="query" value="{{ query }}"
         placeholder="Search by title or synopsis..." size="30"
         style="
             padding: 6px 8px;
