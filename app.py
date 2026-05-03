@@ -1,3 +1,4 @@
+import math
 import secrets
 import sqlite3
 
@@ -26,10 +27,29 @@ def check_csrf():
 
 
 @app.route("/")
-def index():
-    all_items = items.get_items()
+@app.route("/<int:page>")
+def index(page=1):
+    page_size = 10
+    item_count = items.item_count()
+    page_count = math.ceil(item_count / page_size)
+    page_count = max(page_count, 1)
+
+    if page < 1:
+        return redirect("/1")
+
+    if page > page_count:
+        return redirect("/" + str(page_count))
+
+    all_items = items.get_items(page, page_size)
     message = session.pop("message", None)
-    return render_template("index.html", items=all_items, message=message)
+
+    return render_template(
+        "index.html",
+        items=all_items,
+        message=message,
+        page=page,
+        page_count=page_count,
+    )
 
 
 @app.route("/user/<int:user_id>")

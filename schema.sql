@@ -37,3 +37,9 @@ CREATE TABLE images (
     item_id INTEGER REFERENCES items,
     image BLOB
 );
+
+CREATE INDEX idx_items_user_id ON items (user_id);
+CREATE INDEX idx_items_title ON items (title);
+CREATE INDEX idx_reviews_item_id ON reviews (item_id);
+CREATE INDEX idx_item_classes_item_id ON item_classes (item_id);
+CREATE INDEX idx_images_item_id ON images (item_id);

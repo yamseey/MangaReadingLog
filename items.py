@@ -40,9 +40,22 @@ def get_reviews(item_id):
     return db.query(sql, [item_id])
 
 
-def get_items():
-    sql = "SELECT id, title FROM items ORDER BY id DESC"
-    return db.query(sql)
+def item_count():
+    sql = "SELECT COUNT(*) AS count FROM items"
+    result = db.query(sql)
+    return result[0]["count"]
+
+
+def get_items(page, page_size):
+    sql = """SELECT i.id, i.title, COUNT(r.id) AS review_count
+             FROM items i
+             LEFT JOIN reviews r ON i.id = r.item_id
+             GROUP BY i.id, i.title
+             ORDER BY i.id DESC
+             LIMIT ? OFFSET ?"""
+    limit = page_size
+    offset = page_size * (page - 1)
+    return db.query(sql, [limit, offset])
 
 
 def get_images(item_id):
@@ -89,11 +102,11 @@ def get_item(item_id):
 
 
 def update_item(item_id, title, description, author, classes):
-    sql =   """UPDATE items SET title = ?,
+    sql = """UPDATE items SET title = ?,
                                 description = ?,
                                 author = ?
                             WHERE id = ? """
-    db.execute (sql, [title, description, author, item_id])
+    db.execute(sql, [title, description, author, item_id])
 
     sql = "DELETE FROM item_classes WHERE item_id = ?"
     db.execute(sql, [item_id])
@@ -105,16 +118,16 @@ def update_item(item_id, title, description, author, classes):
 
 def remove_item(item_id):
     sql = "DELETE FROM reviews WHERE item_id = ?"
-    db.execute (sql, [item_id])
+    db.execute(sql, [item_id])
 
     sql = "DELETE FROM images WHERE item_id = ?"
-    db.execute (sql, [item_id])
+    db.execute(sql, [item_id])
 
     sql = "DELETE FROM item_classes WHERE item_id = ?"
-    db.execute (sql, [item_id])
+    db.execute(sql, [item_id])
 
     sql = "DELETE FROM items WHERE id = ?"
-    db.execute (sql, [item_id])
+    db.execute(sql, [item_id])
 
 
 def find_items(query):
