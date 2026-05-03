@@ -26,6 +26,11 @@ def check_csrf():
         abort(403)
 
 
+def ensure_csrf_token():
+    if "csrf_token" not in session:
+        session["csrf_token"] = secrets.token_hex(16)
+
+
 @app.route("/")
 @app.route("/<int:page>")
 def index(page=1):
@@ -357,11 +362,13 @@ def remove_item(item_id):
 
 @app.route("/register")
 def register():
+    ensure_csrf_token()
     return render_template("register.html")
 
 
 @app.route("/create", methods=["POST"])
 def create():
+    check_csrf()
     username = request.form["username"].strip()
     password1 = request.form["password1"]
     password2 = request.form["password2"]
@@ -389,9 +396,11 @@ def create():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
+        ensure_csrf_token()
         return render_template("login.html")
 
     if request.method == "POST":
+        check_csrf()
         username = request.form["username"].strip()
         password = request.form["password"]
 

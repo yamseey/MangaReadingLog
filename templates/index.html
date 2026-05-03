@@ -3,6 +3,18 @@
 
 <head>
   <title>MangaReadingLog</title>
+<style>
+  .item-link {
+    text-decoration: none;
+    color: #5a4636;
+    font-size: 15px;
+    }
+
+  .item-link:hover {
+    text-decoration: underline;
+    color: #3f342c;
+    }
+</style>
 </head>
 
   <body style="
@@ -94,13 +106,8 @@
 <ul style="list-style: none; padding: 0; margin: 0; margin-left: 12px;">
   {% for item in items %}
     <li style="margin-bottom: 8px;">
-      <a href="/item/{{ item.id }}" style="
-          text-decoration: none;
-          color: #5a4636;
-          font-size: 15px;"
-         onmouseover="this.style.textDecoration='underline'; this.style.color='#3f342c'"
-         onmouseout="this.style.textDecoration='none'; this.style.color='#5a4636'">
-          ✿ {{ item.title }}
+      <a href="/item/{{ item.id }}" class="item-link">
+        ✿ {{ item.title }}
       </a>
     </li>
   {% endfor %}
@@ -109,22 +116,12 @@
 <p style="color: #7a6a5c;">
   No manga in the library yet.
   {% if session.username %}
-    <a href="/new_item" style="
-        text-decoration: none;
-        color: #5a4636;
-        font-size: 15px;"
-       onmouseover="this.style.textDecoration='underline'; this.style.color='#3f342c'"
-       onmouseout="this.style.textDecoration='none'; this.style.color='#5a4636'">
-        Add the first one!
+    <a href="/new_item" class="item-link">
+      Add the first one!
     </a>
   {% else %}
-    <a href="/login" style="
-        text-decoration: none;
-        color: #5a4636;
-        font-size: 15px;"
-       onmouseover="this.style.textDecoration='underline'; this.style.color='#3f342c'"
-       onmouseout="this.style.textDecoration='none'; this.style.color='#5a4636'">
-        Log in to add the first one!
+    <a href="/login" class="item-link">
+      Log in to add the first one!
     </a>
   {% endif %}
 </p>

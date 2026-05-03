@@ -3,6 +3,31 @@
 
 <head>
   <title>User {{ user.username }}</title>
+<style>
+  .back-link {
+    display: block;
+    margin-top: 16px;
+    color: #7a6a5c;
+    text-decoration: none;
+    font-size: 14px;
+    }
+
+  .back-link:hover {
+    text-decoration: underline;
+    color: #5a4636;
+    }
+
+  .item-link {
+    text-decoration: none;
+    color: #5a4636;
+    font-size: 15px;
+    }
+
+  .item-link:hover {
+    text-decoration: underline;
+    color: #3f342c;
+    }
+</style>
 </head>
 
   <body style="
@@ -20,14 +45,9 @@
 <ul style="list-style: none; padding: 0; margin: 0; margin-left: 12px;">
   {% for item in items %}
     <li style="margin-bottom: 8px;">
-      <a href="/item/{{ item.id }}" style="
-          text-decoration: none;
-          color: #5a4636;
-          font-size: 15px;"
-         onmouseover="this.style.textDecoration='underline'; this.style.color='#3f342c'"
-         onmouseout="this.style.textDecoration='none'; this.style.color='#5a4636'">
-        ✿ {{ item.title }}
-      </a>
+    <a href="/item/{{ item.id }}" class="item-link">
+      ✿ {{ item.title }}
+    </a>
     </li>
   {% endfor %}
 </ul>
@@ -39,16 +59,8 @@
 {% endif %}
 
 <p>
-    <a href="/" style="
-        display: block;
-        margin-top: 16px;
-        color: #7a6a5c;
-        text-decoration: none;
-        font-size: 14px;
-        "
-        onmouseover="this.style.textDecoration='underline'; this.style.color='#5a4636'"
-        onmouseout="this.style.textDecoration='none'; this.style.color='#7a6a5c'">
-        ← Back to Library
+    <a href="/" class="back-link">
+      ← Back to Library
     </a>
 </p>
 </body>

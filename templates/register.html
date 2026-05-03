@@ -3,6 +3,20 @@
 
 <head>
   <title>Registering</title>
+<style>
+  .back-link {
+    display: block;
+    margin-top: 16px;
+    color: #7a6a5c;
+    text-decoration: none;
+    font-size: 14px;
+    }
+
+  .back-link:hover {
+    text-decoration: underline;
+    color: #5a4636;
+    }
+</style>
 </head>
 
 <body style="
@@ -13,6 +27,7 @@
 
   <h1>Create account</h1>
   <form action="/create" method="post">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <p>
       <label for="username">Username:</label><br />
       <input id="username" type="text" name="username" maxlength="25" required />
@@ -38,17 +53,9 @@
         ">
   </form>
   <p>
-    <a href="/" style="
-        display: block;
-        margin-top: 16px;
-        color: #7a6a5c;
-        text-decoration: none;
-        font-size: 14px;
-        "
-        onmouseover="this.style.textDecoration='underline'; this.style.color='#5a4636'"
-        onmouseout="this.style.textDecoration='none'; this.style.color='#7a6a5c'">
-        ← Back to Library
+    <a href="/" class="back-link">
+      ← Back to Library
     </a>
-</p>
+  </p>
 </body>
 </html>

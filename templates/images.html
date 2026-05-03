@@ -3,6 +3,20 @@
 
 <head>
   <title>Manga cover</title>
+<style>
+  .back-link {
+    display: block;
+    margin-top: 16px;
+    color: #7a6a5c;
+    text-decoration: none;
+    font-size: 14px;
+    }
+
+  .back-link:hover {
+    text-decoration: underline;
+    color: #5a4636;
+    }
+</style>
 </head>
 
 <body style="
@@ -81,8 +95,8 @@
 
   </div>
 </div>
-    <p>
-        <a href="/item/{{ item.id }}">←Back to Library</a>
-    </p>
+    <a href="/item/{{ item.id }}" class="back-link">
+        ← Back to Manga
+    </a>
 </body>
 </html>

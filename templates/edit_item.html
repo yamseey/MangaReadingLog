@@ -3,6 +3,50 @@
 
 <head>
   <title>Editing</title>
+<style>
+  .back-link {
+    display: block;
+    margin-top: 16px;
+    color: #7a6a5c;
+    text-decoration: none;
+    font-size: 14px;
+    }
+
+  .back-link:hover {
+    text-decoration: underline;
+    color: #5a4636;
+    }
+
+  .tag input {
+    display: none;
+    }
+
+  .tag span {
+    padding: 4px 10px;
+    border: 1px solid #bbb;
+    border-radius: 999px;
+    background-color: #f4f4f4;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.2s;
+    }
+
+  .tag span {
+    background-color: #f8f1e8;
+    border: 1px solid #e0d5c6;
+    color: #6b5b4d;
+    }
+
+  .tag input:checked + span {
+    background-color: #ecdcc8;
+    border-color: #cbbba6;
+    color: #4a3f35;
+    }
+
+  .tag span:hover {
+    background-color: #eee4d7;
+    }
+</style>
 </head>
 
 <body style="
@@ -11,73 +55,45 @@
   font-family: Arial, sans-serif;
   padding: 24px;">
 
-  <h1>Edit manga</h1>
-  <form action="/update_item" method="post">
-  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-    <p>
-      <label for="title">Title:</label><br />
-      <input id="title" type="text" name="title" value="{{ item.title }}" size="40" maxlength="200" required />
-    </p>
-    <p>
-      <label for="author">Author:</label><br />
-      <input id="author" type="text" name="author" size="20" value="{{ item.author }}" maxlength="100" required />
-    </p>
-<p>Categories:</p>
+<h1>Edit manga</h1>
+<form action="/update_item" method="post">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+  <p>
+    <label for="title">Title:</label><br />
+    <input id="title" type="text" name="title" value="{{ item.title }}" size="40" maxlength="200" required />
+  </p>
+  <p>
+    <label for="author">Author:</label><br />
+    <input id="author" type="text" name="author" size="20" value="{{ item.author }}" maxlength="100" required />
+  </p>
 
-<div style="display: flex; flex-wrap: wrap; gap: 10px; max-width: 700px;">
+<p>Categories:</p>
+  <div style="display: flex; flex-wrap: wrap; gap: 10px; max-width: 700px;">
   {% for option in all_classes["Category"] %}
     <label class="tag">
-      <input type="checkbox" name="categories" value="Category:{{ option }}"
+    <input type="checkbox" name="categories" value="Category:{{ option }}"
         {% if option in categories %}checked{% endif %}>
-      <span>{{ option }}</span>
+    <span>{{ option }}</span>
     </label>
   {% endfor %}
-</div>
+  </div>
 
-<style>
-.tag input {
-  display: none;
-}
-
-.tag span {
-  padding: 4px 10px;
-  border: 1px solid #bbb;
-  border-radius: 999px;
-  background-color: #f4f4f4;
-  cursor: pointer;
-  font-size: 13px;
-  transition: 0.2s;
-}
-.tag span {
-  background-color: #f8f1e8;
-  border: 1px solid #e0d5c6;
-  color: #6b5b4d;
-}
-.tag input:checked + span {
-  background-color: #ecdcc8;
-  border-color: #cbbba6;
-  color: #4a3f35;
-}
-.tag span:hover {
-  background-color: #eee4d7;
-}
-</style>
-    <p>
-      <label for="description">Synopsis:</label><br />
-      <textarea id="description" name="description" rows="8" cols="60" maxlength="1000" required>{{ item.description }}</textarea>
-    </p>
-    <input type="hidden" name="item_id" value="{{ item.id }}" />
-    <p>
-      <label for="status">Status:</label><br />
-      <select id="status" name="status">
-        <option value="">Select status</option>
-        {% for option in all_classes["Status"] %}
-          <option value="Status:{{ option }}"
-            {% if classes["Status"] == option %}selected{% endif %}>
-            {{ option }}
-          </option>
-        {% endfor %}
-      </select>
+  <p>
+    <label for="description">Synopsis:</label><br />
+    <textarea id="description" name="description" rows="8" cols="60" maxlength="1000" required>{{ item.description }}</textarea>
+  </p>
+  <input type="hidden" name="item_id" value="{{ item.id }}" />
+  <p>
+    <label for="status">Status:</label><br />
+    <select id="status" name="status">
+      <option value="">Select status</option>
+      {% for option in all_classes["Status"] %}
+        <option value="Status:{{ option }}"
+          {% if classes["Status"] == option %}selected{% endif %}>
+          {{ option }}
+        </option>
+      {% endfor %}
+    </select>
     </p>
 
     <p>
@@ -101,5 +117,11 @@
     cursor: pointer;
     ">
   </form>
+  <p>
+    <a href="/item/{{ item.id }}" class="back-link">
+      ← Back to manga
+    </a>
+  </p>
+
 </body>
 </html>
