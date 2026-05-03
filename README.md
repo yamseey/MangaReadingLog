@@ -68,7 +68,6 @@ The application can be tested with a large dataset using the script `seed.py`.
 Run the script:
 ```
 $ python seed.py
-
 ```
 
 This generates test data with:
