@@ -5,17 +5,39 @@
   <title>User {{ user.username }}</title>
 </head>
 
-<body>
-  <h1>User {{ user.username }}</h1>
+  <body style="
+    background-color: #f6efe6;
+    color: #3f342c;
+    font-family: Arial, sans-serif;
+    padding: 24px;">
+  <h1>{{ user.username }}'s manga</h1>
   <p>
-    Manga entries added: {{ items | count}}
+    Manga entries added: {{ items | count }}
   </p>
-  <h2> Manga</h2>
-  <ul>
-    {% for item in items %}
-    <li><a href="/item/{{ item.id }}">{{ item.title }}</a></li>
-    {% endfor %}
-  </ul>
+<h2 style="margin-bottom: 6px; margin-top: 16px;">Manga</h2>
+
+{% if items %}
+<ul style="list-style: none; padding: 0; margin: 0; margin-left: 12px;">
+  {% for item in items %}
+    <li style="margin-bottom: 8px;">
+      <a href="/item/{{ item.id }}" style="
+          text-decoration: none;
+          color: #5a4636;
+          font-size: 15px;"
+         onmouseover="this.style.textDecoration='underline'; this.style.color='#3f342c'"
+         onmouseout="this.style.textDecoration='none'; this.style.color='#5a4636'">
+        ✿ {{ item.title }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+
+{% else %}
+  <p style="color:#7a6a5c; margin-left: 12px;">
+    ✿ No manga added yet.
+  </p>
+{% endif %}
+
 <p>
     <a href="/" style="
         display: block;
@@ -30,9 +52,4 @@
     </a>
 </p>
 </body>
-  <body style="
-    background-color: #f6efe6;
-    color: #3f342c;
-    font-family: Arial, sans-serif;
-    padding: 24px;">
 </html>

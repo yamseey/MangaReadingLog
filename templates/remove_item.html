@@ -5,7 +5,12 @@
   <title>Remove manga</title>
 </head>
 
-<body>
+<body style="
+  background-color: #f6efe6;
+  color: #3f342c;
+  font-family: Arial, sans-serif;
+  padding: 24px;">
+
   <h1>Delete Manga</h1>
   <p>Are you sure you want to delete <strong>{{ item.title }}</strong> from the library?</p>
   <form action="/remove_item/{{ item.id }}" method="post">
@@ -28,9 +33,4 @@
       ">
   </form>
 </body>
-  <body style="
-    background-color: #f6efe6;
-    color: #3f342c;
-    font-family: Arial, sans-serif;
-    padding: 24px;">
 </html>
