@@ -12,11 +12,17 @@
     padding: 24px;">
 
   <h1> Search Manga </h1>
-    <form action="/find_item" method = "get">
-        <p>
-            <input type="text" name="query" value = "{{ query }}" placeholder="Search by title or synopsis..." size = "30">
-        </p>
-        <input type="submit" value = "Search" style="
+    <form action="/find_item" method="get">
+    <div style="display: flex; gap: 6px; align-items: center;"> 
+       <input type="text" name="query" value="{{ query }}"
+        placeholder="Search by title or synopsis..." size="30"
+        style="
+            padding: 6px 8px;
+            border: 1px solid #d6c2a8;
+            border-radius: 6px;
+        ">
+
+        <input type="submit" value="Search" style="
             padding: 4px 8px;
             border: 1px solid #d6c2a8;
             border-radius: 3px;
@@ -24,6 +30,7 @@
             color: #5a4636;
             cursor: pointer;
             ">
+    </div>
     </form>
 
 <p>
@@ -41,13 +48,24 @@
 </p>
 
 {% if query %}
-<h2>Results</h2>
+<h2 style="margin-bottom: 4px;">Results</h2>
 
-<ul>
-    {% for item in results %}
-    <li><a href="/item/{{ item.id }}">{{ item.title }}</a></li>
-    {% endfor %}
+{% if results %}
+<ul style="list-style: none; padding: 0;">
+  {% for item in results %}
+    <li style="margin-bottom: 6px;">
+      <a href="/item/{{ item.id }}" style="text-decoration:none; color:#5a4636;">
+        ✿ {{ item.title }}
+      </a>
+    </li>
+  {% endfor %}
 </ul>
+
+{% else %}
+<p style="color:#7a6a5c; margin-top: 4px;">
+  ✿ No manga found… maybe try a different search.
+</p>
+{% endif %}
 {% endif %}
 </body>
 </html>
